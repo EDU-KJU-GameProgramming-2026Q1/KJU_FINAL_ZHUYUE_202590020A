@@ -2,8 +2,11 @@
 
 public class Actor_Bullet : MonoBehaviour
 {
-    public GameObject MissEffect, HitEffect;
-    public GameObject ShootSound, HitSound;
+    public GameObject MissEffect, HitEffect,ShootEffect;
+    public AudioClip ShootSound, HitSound;
+    public AudioSource audioSource;
+    public float BullectDestroyDelay = 0.2f;
+
     private float bulletDamage = 5f;    
     private bool isHit = false;  
 
@@ -13,6 +16,8 @@ public class Actor_Bullet : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource.clip = ShootSound;
+        audioSource.PlayOneShot(ShootSound);
     }
 
     void FixedUpdate()
@@ -40,7 +45,8 @@ public class Actor_Bullet : MonoBehaviour
             isHit = true;
             ShowEffect(HitEffect, contactPoint); 
             //ScoreManager.Instance.AddScore(-10);    
-            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(bulletDamage);   
+            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(bulletDamage);
+            AudioSource.PlayClipAtPoint(HitSound, transform.position);
             Destroy(gameObject);
         } 
         else if(collision.gameObject.CompareTag("Enemy"))
@@ -50,6 +56,7 @@ public class Actor_Bullet : MonoBehaviour
             ShowEffect(HitEffect, contactPoint);
             //ScoreManager.Instance.AddScore(10);          
             collision.gameObject.GetComponent<EnemyHealth>().TakeDamage(bulletDamage);
+            AudioSource.PlayClipAtPoint(HitSound, transform.position);
             Destroy(gameObject);
         }        
         else if(collision.gameObject.CompareTag("Shootable"))
@@ -88,12 +95,14 @@ public class Actor_Bullet : MonoBehaviour
 
             //ScoreManager.Instance.AddScore(10);
             other.GetComponent<EnemyHealth>().TakeDamage(bulletDamage);
+            AudioSource.PlayClipAtPoint(HitSound, transform.position);
             Destroy(gameObject);
         }
         else if(other.CompareTag("Shootable"))
         {
             Debug.Log($"[OnTriggerEnter] Miss {other.name} ");
             ShowEffect(MissEffect, contactPoint);
+            AudioSource.PlayClipAtPoint(HitSound, transform.position);
             Destroy(gameObject);
         }
         else
