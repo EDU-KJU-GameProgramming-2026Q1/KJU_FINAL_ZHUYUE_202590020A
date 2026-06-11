@@ -9,8 +9,11 @@ EditorBuildSettings:
     path: Assets/FINAL/FINAL_Scene1.unity
     guid: 3813eba8ac0c56e4c90ededfac2b2666
   - enabled: 1
-    path: Assets/FINAL/Game tutorial.unity
+    path: Assets/FINAL/FINAL_Scene1_Game tutorial.unity
     guid: 88bc552e186569240b3b97a9d0d493e5
+  - enabled: 1
+    path: Assets/FINAL/FINAL_Scene1_Pass Method.unity
+    guid: b74ce3ddb98e4b242a052419af426d15
   - enabled: 1
     path: Assets/FINAL/FINAL_Scene2.unity
     guid: e0cecec7b7115444690329fe3b6d247e
